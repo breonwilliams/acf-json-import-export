@@ -33,8 +33,7 @@ add_action('admin_init', function() {
 
 // Add admin menus
 add_action('admin_menu', function () {
-    add_submenu_page(
-        'tools.php',
+    add_menu_page(
         'Export ACF Fields',
         'Export ACF Fields',
         'manage_options',
@@ -42,8 +41,7 @@ add_action('admin_menu', function () {
         'acf_export_admin_page'
     );
 
-    add_submenu_page(
-        'tools.php',
+    add_menu_page(
         'Import ACF JSON',
         'Import ACF JSON',
         'manage_options',
@@ -273,6 +271,6 @@ add_action('admin_post_import_acf_json', function () {
         update_field($key, $value, $post_id);
     }
 
-    wp_redirect(admin_url('tools.php?page=acf-json-import&imported=1&post_type=' . $post_type));
+    wp_redirect(admin_url('admin.php?page=acf-json-import&imported=1&post_type=' . $post_type));
     exit;
 });
