@@ -1,12 +1,14 @@
 <?php
 /**
  * Plugin Name: ACF JSON Import/Export Tool
+ * Plugin URI: https://breonwilliams.com/plugins/acf-json-import-export
  * Description: Adds admin tools to export and import ACF JSON field data for any post type.
  * Version: 1.4
  * Author: Breon Williams
  * Author URI: https://breonwilliams.com
  * Text Domain: acf-json-import-export
  * Domain Path: /languages
+ * Requires at least: 5.0
  * Requires PHP: 7.0
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -131,6 +133,11 @@ class Plugin {
      * Add admin menus
      */
     public function add_admin_menus() {
+        // Ensure we're in admin area
+        if (!is_admin()) {
+            return;
+        }
+        
         add_submenu_page(
             'tools.php',
             __('Export ACF Fields', 'acf-json-import-export'),
@@ -739,3 +746,9 @@ class Plugin {
 add_action('plugins_loaded', function() {
     Plugin::get_instance();
 });
+
+// Activation hook to flush rewrite rules
+register_activation_hook(__FILE__, function() {
+    flush_rewrite_rules();
+});
+
